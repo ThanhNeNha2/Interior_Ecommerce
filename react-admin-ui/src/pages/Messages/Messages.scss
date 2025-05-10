@@ -1,0 +1,395 @@
+.Messages {
+  position: fixed;
+  top: 0;
+  right: 10px;
+  left: 230px;
+  display: flex;
+  gap: 10px;
+  height: 100vh;
+  background: rgb(230, 230, 230);
+  padding: 10px;
+  border-radius: 5px;
+
+  .MLeft {
+    width: 30%;
+    background: white;
+    height: 100%;
+    color: black;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .MLeftUp {
+      height: 55px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 15px;
+      .MLeftUpContent {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        span {
+          font-weight: 600;
+          font-size: 19px;
+        }
+        p {
+          font-size: 13px;
+          font-weight: 500;
+          color: gray;
+        }
+      }
+      .MLeftUpIcon {
+        color: gray;
+        font-size: 18px;
+        cursor: pointer;
+      }
+    }
+    .MLeftInput {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      align-items: center;
+      padding: 0px 15px;
+
+      input {
+        width: 97%;
+        border: none;
+        background-color: rgb(235, 235, 235);
+        padding: 8px 0 8px 25px;
+        border-radius: 3px;
+      }
+      .MLeftInputIcon {
+        position: absolute;
+        left: 30px;
+        color: gray;
+      }
+    }
+    .userMessage {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px;
+      overflow-y: auto;
+      border-radius: 15px;
+      width: 100%;
+      margin: 0 auto;
+
+      &__item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+        &:hover {
+          cursor: pointer;
+          background-color: rgb(190, 190, 190);
+        }
+
+        /* ✅ Khi click sẽ đổi màu */
+        &.active {
+          background-color: rgb(207, 207, 207);
+        }
+      }
+
+      &__avatar {
+        background-color: #ff5b5b;
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 50%;
+        }
+      }
+
+      &__details {
+        flex: 1;
+        h4 {
+          margin: 0;
+          font-weight: 600;
+          font-size: 16px;
+          color: #333;
+        }
+
+        p {
+          margin: 0;
+          color: #777;
+          font-size: 13px;
+        }
+      }
+      .userMessage__index {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 5px;
+      }
+      &__time {
+        font-size: 12px;
+        color: #aaa;
+        margin-left: 10px;
+      }
+
+      &__notification {
+        background-color: #ff3d3d;
+        color: #ffffff;
+        font-size: 12px;
+        width: 17px;
+        height: 17px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+      }
+      .AllMess {
+        display: flex;
+        padding: 0 15px;
+        align-items: center;
+        gap: 5px;
+        margin: 5px 0;
+        color: green;
+        span {
+          font-weight: 500;
+        }
+      }
+    }
+  }
+  .chat-container {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    height: calc(100vh - 160px);
+    display: flex;
+    flex-direction: column;
+    .chat-date {
+      text-align: center;
+      background-color: #f0f0f0;
+      padding: 6px 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: #555;
+    }
+    .chat-message {
+      display: flex;
+      align-items: flex-end;
+      margin-bottom: 10px;
+      max-width: 60%;
+
+      &.sender {
+        align-self: flex-end;
+        flex-direction: row-reverse;
+
+        .message-content {
+          background-color: #4ade80;
+          color: #ffffff;
+        }
+      }
+
+      &.receiver {
+        align-self: flex-start;
+
+        .message-content {
+          background-color: #e5e7eb;
+          color: #000000;
+        }
+      }
+    }
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin: 0 10px;
+      object-fit: cover;
+    }
+
+    .message-content {
+      padding: 10px 14px;
+      border-radius: 16px;
+      font-size: 16px;
+      line-height: 1.4;
+      position: relative;
+      max-width: 100%;
+      word-break: break-word;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+      .time {
+        font-size: 12px;
+        color: #6b7280;
+        margin-top: 4px;
+        text-align: right;
+        display: block;
+      }
+    }
+  }
+
+  .MRight {
+    flex: 1px;
+    height: 100%;
+    border-radius: 5px;
+    background: white;
+    padding: 15px 20px;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .MRightUp {
+      height: 55px;
+      display: flex;
+      justify-content: space-between;
+      .MRightUpInfo {
+        display: flex;
+        gap: 10px;
+        .MRightUpImage {
+          width: 50px;
+          height: 50px;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 100%;
+          }
+        }
+        .MRightUpName {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 4px;
+          span {
+            font-weight: 600;
+          }
+          .status {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            span {
+              color: green;
+              display: flex;
+              justify-content: center;
+              align-content: center;
+              font-size: 18px;
+            }
+
+            p {
+              font-size: 14px;
+              font-weight: 500;
+            }
+          }
+        }
+      }
+      .MRightUpSetting {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        .cam {
+          font-size: 22px;
+        }
+        .phone {
+          font-size: 18px;
+        }
+        .option {
+          font-size: 18px;
+          width: 30px;
+          height: 30px;
+          border-radius: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: 1px solid gray;
+          color: gray;
+        }
+      }
+    }
+    .MRightBelow {
+      display: flex;
+
+      border-radius: 8px;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .MRightBelowInput {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      .emoji-picker {
+        position: absolute;
+        width: 300px;
+        bottom: 60px;
+        right: 0;
+        z-index: 9999;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+      }
+    }
+
+    .MRightBelowInput .inputSuccess {
+      width: 100%;
+      padding: 10px 45px 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      outline: none;
+      font-size: 16px;
+      background-color: #fff;
+    }
+    .MRightBelowInput .inputError {
+      width: 100%;
+      padding: 10px 45px 10px 15px;
+      border: 1px solid #c41313;
+      border-radius: 8px;
+      outline: none;
+      font-size: 16px;
+
+      background-color: #fff;
+      &::placeholder {
+        color: red;
+      }
+    }
+    /* Icon nằm trong input */
+    .MRightBelowIcon {
+      position: absolute;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #888;
+      cursor: pointer;
+    }
+
+    /* Nút gửi */
+    .MRightBelowIconSend {
+      width: 40px;
+      height: 40px;
+      background: #049c04;
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .MRightBelowIconSend:hover {
+      background: #037b03;
+    }
+  }
+}

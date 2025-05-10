@@ -23,9 +23,14 @@ const upload = async (file: any, value: string) => {
       "https://api.cloudinary.com/v1_1/dqgn2mwuw/image/upload",
       data
     );
-    const { url } = res.data;
-    console.log("Uploaded URL:", url);
-    return url;
+    const { secure_url, public_id } = res.data;
+    console.log(" check thu thong tin id de xoa ", public_id);
+
+    if (!secure_url || !public_id) {
+      throw new Error("Upload failed: Missing secure_url or public_id");
+    }
+
+    return secure_url;
   } catch (err) {
     console.error("Error uploading file:", err);
   }

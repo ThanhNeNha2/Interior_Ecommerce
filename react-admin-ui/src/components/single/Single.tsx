@@ -9,9 +9,11 @@ import {
 } from "recharts";
 import "./single.scss";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useNavigate, useParams } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiCustom } from "../../custom/customApi";
+import upload from "../../utils/upload";
+import toast from "react-hot-toast";
 
 type Props = {
   id: number;
@@ -27,9 +29,18 @@ type Props = {
 };
 
 const Single = (props: Props) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [info, setInfo] = useState(props.info); // Lưu props.info vào state
+  const [file, setFile] = useState<File | null>(null);
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [info, setInfo] = useState({
+    address: "",
+    email: "",
+    image: "",
+    phone: 0,
+    role: "",
+    username: "",
+  }); // Lưu props.info vào state
+  const navigate = useNavigate();
   const { id } = useParams();
   const { isLoading, data } = useQuery({
     queryKey: ["singleUser"],
@@ -43,6 +54,10 @@ const Single = (props: Props) => {
       setInfo({
         username: data?.user.username,
         email: data?.user.email,
+        role: data?.user.role,
+        phone: data?.user.phone,
+        image: data?.user.image,
+        address: data?.user.address,
       });
     };
     updateInfo();
@@ -59,46 +74,97 @@ const Single = (props: Props) => {
       [key]: value,
     }));
   };
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (infoUpdate: {}) => {
       return apiCustom.put(`/${props.path}/${id}`, infoUpdate);
     },
+    onSuccess: (response) => {
+      queryClient.invalidateQueries([`singleUser`]);
+      toast.success("🎉 User đã được tạo thành công!");
+      navigate("/users");
+    },
+    onError: (error) => {
+      // ❌ Thất bại -> Thông báo lỗi
+      toast.error("🚨 Lỗi khi tạo user. Vui lòng thử lại!");
+    },
   });
 
   // Xử lý khi nhấn "Save"
-  const handleSave = () => {
+  const handleSave = async () => {
     setIsEditing(false);
-    console.log("Updated Data:", info); // Bạn có thể gửi lên API ở đây
-    mutation.mutate(info);
+    const url = await upload(file, "user");
+    mutation.mutate({ ...info, image: url });
   };
   return (
     <div className="single">
       <div className="view">
         <div className="info">
           <div className="topInfo">
-            {props.img && <img src={props.img} alt="" />}
-            <h1>{props.title}</h1>
             {isEditing ? (
-              <button onClick={handleSave}>Save</button>
+              <>
+                {/* Input để thay đổi ảnh */}
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    if (e.target.files && e.target.files.length > 0) {
+                      setFile(e.target.files[0]);
+                    }
+                  }}
+                />
+                {/* Input để thay đổi username */}
+                <input
+                  type="text"
+                  value={info.username || ""}
+                  onChange={(e) => handleChange("username", e.target.value)}
+                  placeholder="Enter username"
+                  className="topInfoInput"
+                />
+                <button onClick={handleSave} className="topInfoSave">
+                  Save
+                </button>
+              </>
             ) : (
-              <button onClick={handleEdit}>Update</button>
+              <>
+                {/* Hiển thị ảnh nếu có */}
+                {info.image && <img src={info.image} alt="Profile" />}
+                <h1>{info.username}</h1>
+                <button onClick={handleEdit} className="topInfoUpdate">
+                  Update
+                </button>
+              </>
             )}
           </div>
+
           <div className="details">
-            {Object.entries(info).map(([key, value]) => (
-              <div className="item" key={key}>
-                <span className="itemTitle">{key} </span>
-                {isEditing ? (
-                  <input
-                    type="text"
-                    value={value}
-                    onChange={(e) => handleChange(key, e.target.value)}
-                  />
-                ) : (
-                  <span className="itemValue">{value}</span>
-                )}
-              </div>
-            ))}
+            {Object.entries(info)
+              .filter(([key]) => key !== "username" && key !== "image") // Bỏ qua 2 trường
+              .map(([key, value]) => (
+                <div className="item" key={key}>
+                  <span className="itemTitle">{key}</span>
+                  {isEditing ? (
+                    key === "role" ? ( // Nếu là "role" thì hiển thị select
+                      <select
+                        value={value}
+                        onChange={(e) => handleChange(key, e.target.value)}
+                      >
+                        <option value="USER">USER</option>
+                        <option value="ADMIN">ADMIN</option>
+                      </select>
+                    ) : (
+                      // Nếu không thì dùng input bình thường
+                      <input
+                        type="text"
+                        value={value}
+                        onChange={(e) => handleChange(key, e.target.value)}
+                      />
+                    )
+                  ) : (
+                    <span className="itemValue">{value}</span>
+                  )}
+                </div>
+              ))}
           </div>
         </div>
         <hr />

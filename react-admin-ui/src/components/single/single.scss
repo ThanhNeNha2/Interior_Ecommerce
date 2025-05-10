@@ -1,9 +1,10 @@
 @import "../../styles/responsive.scss";
+@import "../../styles/variables.scss";
 
 .single {
   display: flex;
 
-  @include xl{
+  @include xl {
     flex-direction: column;
     gap: 50px;
   }
@@ -17,6 +18,32 @@
         align-items: center;
         gap: 20px;
 
+        .topInfoInput {
+          padding: 10px;
+          background-color: rgb(194, 194, 194);
+          outline: none;
+          border: 1px solid $soft-color;
+          border-radius: 3px;
+        }
+        .topInfoSave {
+          padding: 10px 15px;
+          background-color: green;
+          border: none;
+          color: white;
+          border-radius: 3px;
+          cursor: pointer;
+        }
+        .topInfoUpdate {
+          padding: 10px 15px;
+          background-color: rgb(155, 155, 18);
+          border: none;
+          color: white;
+          border-radius: 3px;
+          cursor: pointer;
+        }
+        button:hover {
+          opacity: 0.8;
+        }
         img {
           width: 100px;
           height: 100px;
@@ -30,7 +57,20 @@
       }
       .details {
         font-size: 18px;
-
+        input {
+          padding: 10px;
+          background-color: rgb(194, 194, 194);
+          outline: none;
+          border: 1px solid $soft-color;
+          border-radius: 3px;
+        }
+        select {
+          padding: 10px;
+          background-color: rgb(194, 194, 194);
+          outline: none;
+          border: 1px solid $soft-color;
+          border-radius: 3px;
+        }
         .item {
           margin: 30px 0px;
 
@@ -49,7 +89,7 @@
       border: 0.5px solid gray;
       margin: 20px 0px;
 
-      @include md{
+      @include md {
         display: none;
       }
     }
@@ -59,7 +99,7 @@
       width: 80%;
       height: 400px;
 
-      @include md{
+      @include md {
         display: none;
       }
     }
@@ -96,15 +136,15 @@
           padding: 15px;
           background-color: #f45b6810;
 
-          @include md{
+          @include md {
             min-width: 250px;
           }
 
-          p{
+          p {
             margin-bottom: 5px;
           }
 
-          time{
+          time {
             font-size: 12px;
           }
         }

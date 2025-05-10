@@ -104,11 +104,11 @@ const BlogUpdate = () => {
               <label>Image Blog</label>
               <input
                 type="file"
-                //  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                //    if (e.target.files && e.target.files.length > 0) {
-                //      setFile(e.target.files[0]);
-                //    }
-                //  }}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  if (e.target.files && e.target.files.length > 0) {
+                    setFile(e.target.files[0]);
+                  }
+                }}
               />
             </div>
             <div className="manageImg">

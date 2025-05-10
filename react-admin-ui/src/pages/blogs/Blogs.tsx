@@ -60,7 +60,7 @@ const Posts = () => {
         <h1>Blog</h1>
         <Link to={"/addBlog"}>
           {" "}
-          <button>Add New Post</button>
+          <button className="BlogButton">Add New Blog</button>
         </Link>
       </div>
       <DataTable

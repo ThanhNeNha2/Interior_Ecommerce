@@ -25,7 +25,6 @@ const Add = (props: Props) => {
     role: "USER",
     image: "",
   });
-  console.log("check thông tin ", infoCreate);
 
   const handleChangeInfoCreate = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,

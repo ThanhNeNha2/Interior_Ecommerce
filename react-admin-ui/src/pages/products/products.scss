@@ -1,14 +1,21 @@
-.products{
-
-  .info{
+.products {
+  .info {
     display: flex;
     align-items: center;
     gap: 20px;
     margin-bottom: 20px;
 
-    button{
-      padding: 5px;
+    .ProductButton {
+      padding: 10px 15px;
       cursor: pointer;
+      background: green;
+      font-weight: 500;
+      color: white;
+      border-radius: 3px;
+      border: none;
+    }
+    .ProductButton:hover {
+      opacity: 0.8;
     }
   }
 }

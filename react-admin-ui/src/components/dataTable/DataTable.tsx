@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiCustom } from "../../custom/customApi";
+import deleteImage from "../../utils/delete";
 // import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type Props = {
@@ -14,18 +15,22 @@ type Props = {
 };
 
 const DataTable = (props: Props) => {
-  console.log("check ", props);
-
   // TEST THE API
 
   const [showModal, setShowModal] = useState(false);
   const [selectedInfo, setSelectedInfo] = useState("");
   const [getIdDelete, setGetIdDelete] = useState("");
+  const [public_id_imageBlog, setPublic_id_imageBlog] = useState("");
 
-  const handleDelete = (info: string, id: string) => {
+  const handleDelete = (
+    info: string,
+    id: string
+    // , public_id_image: string
+  ) => {
     setSelectedInfo(info);
     setGetIdDelete(id);
     setShowModal(true);
+    // setPublic_id_imageBlog(public_id_image);
   };
 
   const handleCloseModal = () => {
@@ -40,7 +45,8 @@ const DataTable = (props: Props) => {
       queryClient.invalidateQueries([`all${props.slug}`]);
     },
   });
-  const handleConfirm = (id: string) => {
+  const handleConfirm = async (id: string) => {
+    // await deleteImage(public_id_imageBlog);
     mutation.mutate(id);
     setShowModal(false);
   };
@@ -52,7 +58,6 @@ const DataTable = (props: Props) => {
     renderCell: (params: any) => {
       // thong tin search
       const search = props.infoSearch;
-
       return (
         <div className="action">
           <Link to={`/${props.slug}/${params.row.id}`}>
@@ -60,7 +65,13 @@ const DataTable = (props: Props) => {
           </Link>
           <div
             className="delete"
-            onClick={() => handleDelete(params.row[search], params.row.id)}
+            onClick={() =>
+              handleDelete(
+                params.row[search],
+                params.row.id
+                // params.row.public_id_image || ""
+              )
+            }
           >
             <img src="/delete.svg" alt="" />
           </div>

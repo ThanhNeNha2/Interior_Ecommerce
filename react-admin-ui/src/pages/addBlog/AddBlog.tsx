@@ -18,6 +18,7 @@ const AddBlog = () => {
     imgMainBlog: "",
     descripShort: "",
     description: "",
+    public_id_image: "",
   });
   // Hàm lấy thông tin từ Editor
   const handleEditorChange = (content: string) => {
@@ -31,7 +32,6 @@ const AddBlog = () => {
   };
 
   // API CREATE
-
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -57,10 +57,18 @@ const AddBlog = () => {
       toast.error("⚠️ Vui lòng điền đầy đủ thông tin tất cả các trường!");
       return;
     }
+    // const { url, public_id_image } = (await upload(file, "blog")) as {
+    //   public_id_image: any;
+    //   url: any;
+    // };
     const url = await upload(file, "blog");
 
     // Nếu đủ thông tin thì gọi mutation
-    mutation.mutate({ ...listInfoBlog, imgMainBlog: url });
+    mutation.mutate({
+      ...listInfoBlog,
+      imgMainBlog: url,
+      // public_id_image: public_id_image,
+    });
   };
   return (
     <div className="addblog">
